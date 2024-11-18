@@ -19,9 +19,9 @@ public class ExelWork {
     private File exel;
     private String str;
 
-    ExelWork() {}
+    public ExelWork() {}
 
-    ExelWork(File exel) {
+    public ExelWork(File exel) {
         this.exel = exel;
     }
 

@@ -1,6 +1,8 @@
-package com.example.rejectionapp;
+package com.example.rejectionapp.controllers;
 
-import com.almasb.fxgl.app.MainWindow;
+import com.example.rejectionapp.ExelWork;
+import com.example.rejectionapp.GrGis;
+import com.example.rejectionapp.HelloApplication;
 import com.example.rejectionapp.methods.Selection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,17 +10,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,6 +59,9 @@ public class EndAppController {
 
     @FXML
     private Text standardDeviation;
+
+    @FXML
+    private ImageView GistogramImage;
 
     double[] arr;
     private String method;
@@ -99,6 +103,8 @@ public class EndAppController {
         coefficientVariation.setText(info[0]);
         averageValue.setText(info[1]);
         standardDeviation.setText(info[2]);
+//        GistogramImage.setImage(new GrGis().getImageGis());
+
     }
 
     @FXML

@@ -1,5 +1,7 @@
-package com.example.rejectionapp;
+package com.example.rejectionapp.controllers;
 
+import com.example.rejectionapp.ExelWork;
+import com.example.rejectionapp.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
