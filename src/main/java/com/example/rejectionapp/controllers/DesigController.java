@@ -7,9 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -24,22 +22,10 @@ import java.util.logging.Logger;
 public class DesigController {
 
     @FXML
-    private Pane Background;
-
-    @FXML
-    private Button ButtonStart;
-
-    @FXML
-    private Pane Info;
-
-    @FXML
     private CheckBox Metod3Sigm;
 
     @FXML
     private CheckBox MetodGrabbsa;
-
-    @FXML
-    private Button OnloadDock;
 
     @FXML
     private CheckBox VidLogonormalnoe;
@@ -50,13 +36,7 @@ public class DesigController {
     @FXML
     private Text fileName;
 
-    private Logger logger = Logger.getLogger("DesigController");
-    private Stage stage;
     private File file;
-
-    public void init(Stage stage) {
-        this.stage = stage;
-    }
 
     @FXML
     private void isActiveSigm() {
@@ -88,6 +68,7 @@ public class DesigController {
 
     @FXML
     private void activeButtonOnload() {
+        Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         file = fileChooser.showOpenDialog(stage);
 
@@ -99,14 +80,15 @@ public class DesigController {
 
     @FXML
     private void activeButtonStart(ActionEvent event) {
-        logger = Logger.getLogger("DesigController");
+        Logger logger = Logger.getLogger("DesigController");
+
         if (file == null) {
             return;
         }
 
         if (FilenameUtils.getExtension(fileName.getText()).equals("txt")) {
             try (Scanner sc = new Scanner(file);
-                 FileWriter fw = new FileWriter("arr.txt");) {
+                 FileWriter fw = new FileWriter("arr.txt")) {
                 while (sc.hasNextLine()) {
                     fw.write(sc.nextLine() + "\n");
                 }
@@ -114,6 +96,7 @@ public class DesigController {
                 logger.warning(e.getMessage());
             }
         }
+
         if (FilenameUtils.getExtension(fileName.getText()).equals("xlsx")) {
             ExelWork exelWork = new ExelWork(file);
             exelWork.setArrForTXT();

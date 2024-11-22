@@ -1,9 +1,10 @@
 package com.example.rejectionapp.controllers;
 
 import com.example.rejectionapp.ExelWork;
-import com.example.rejectionapp.GrGis;
 import com.example.rejectionapp.HelloApplication;
+import com.example.rejectionapp.gistogreMethods.GrGis;
 import com.example.rejectionapp.methods.Selection;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -76,6 +76,7 @@ public class EndAppController {
         File fileMethod = new File("Method.txt");
         File fileArr = new File("arr.txt");
         List<String> list = new ArrayList<>();
+        GrGis gis = new GrGis(fileArr);
 
         try (Scanner sc = new Scanner(fileMethod);
             Scanner sc1 = new Scanner(fileArr)) {
@@ -103,8 +104,7 @@ public class EndAppController {
         coefficientVariation.setText(info[0]);
         averageValue.setText(info[1]);
         standardDeviation.setText(info[2]);
-//        GistogramImage.setImage(new GrGis().getImageGis());
-
+        GistogramImage.setImage(SwingFXUtils.toFXImage(gis.getImageGis(gis.createPanel()), null));
     }
 
     @FXML

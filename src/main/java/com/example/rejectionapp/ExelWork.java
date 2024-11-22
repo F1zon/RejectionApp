@@ -1,10 +1,6 @@
 package com.example.rejectionapp;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExelWork {
 
     private File exel;
-    private String str;
 
     public ExelWork() {}
 
@@ -26,9 +21,9 @@ public class ExelWork {
     }
 
     public void setArrForTXT() {
-        Path path = exel.toPath();
+//        Path path = exel.toPath();
         try (FileWriter fw = new FileWriter("arr.txt");
-             XSSFWorkbook workbook = new XSSFWorkbook(exel);) {
+             XSSFWorkbook workbook = new XSSFWorkbook(exel)) {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
             for (Row row : sheet) {
@@ -37,7 +32,7 @@ public class ExelWork {
 
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
-                    str = String.valueOf(cell.getNumericCellValue()).replace(",", ".");
+                    String str = String.valueOf(cell.getNumericCellValue()).replace(",", ".");
 
                     if (!str.equals("0.0")) {
                         System.out.println(str);
@@ -47,7 +42,7 @@ public class ExelWork {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -65,7 +60,6 @@ public class ExelWork {
         for (String key : keyset) {
             Row row = sheet.createRow(rowNum++);
             String numArr = data.get(key);
-            int cellNum = 0;
 
             Cell cell = row.createCell(0);
             cell.setCellValue(numArr);

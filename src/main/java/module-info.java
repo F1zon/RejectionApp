@@ -16,9 +16,15 @@ module com.example.rejectionapp {
     requires org.apache.commons.io;
     requires commons.math3;
     requires java.desktop;
+    requires static lombok;
+    requires jfreechart;
+    requires jcommon;
+    requires javafx.swing;
 
     opens com.example.rejectionapp to javafx.fxml;
     exports com.example.rejectionapp;
     exports com.example.rejectionapp.controllers;
     opens com.example.rejectionapp.controllers to javafx.fxml;
+    exports com.example.rejectionapp.gistogreMethods;
+    opens com.example.rejectionapp.gistogreMethods to javafx.fxml;
 }
