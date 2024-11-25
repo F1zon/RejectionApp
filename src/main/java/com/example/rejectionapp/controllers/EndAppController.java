@@ -2,7 +2,6 @@ package com.example.rejectionapp.controllers;
 
 import com.example.rejectionapp.ExelWork;
 import com.example.rejectionapp.HelloApplication;
-import com.example.rejectionapp.gistogreMethods.ConverFrameToImage;
 import com.example.rejectionapp.gistogreMethods.GisFrame;
 import com.example.rejectionapp.methods.Selection;
 import javafx.embed.swing.SwingFXUtils;
@@ -77,7 +76,7 @@ public class EndAppController {
         File fileMethod = new File("Method.txt");
         File fileArr = new File("arr.txt");
         List<String> list = new ArrayList<>();
-        GisFrame frame = new GisFrame();
+        GisFrame frame = new GisFrame(fileArr);
 
         try (Scanner sc = new Scanner(fileMethod);
             Scanner sc1 = new Scanner(fileArr)) {

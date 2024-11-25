@@ -2,57 +2,92 @@ package com.example.rejectionapp.gistogreMethods;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.lang.reflect.Field;
+import java.util.*;
+import java.util.List;
+import java.util.logging.Logger;
 
-import static java.awt.Color.RED;
+import static java.awt.Color.*;
 
 public class GisPanel extends JPanel {
+    private GraphValues values;
+    private final Logger logger = Logger.getLogger(GisPanel.class.getName());
 
-    public GisPanel() {
-        setSize(500, 500);
+    public GisPanel(File file) {
+        setSize(1600, 500);
+        setBackground(WHITE);
+//        setFont(this.getFont().deriveFont(16f));
+        values = new GraphValues(file);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        List<Double> occurrences = values.getOccurrences();
+        List<Integer> GraphrangeValues = values.getRangeValues().stream().distinct().sorted().toList();
+        List<Integer> rangeValues = values.getRangeValues();
+        Map<Integer, Integer> coordinatesRangeY = new HashMap<>();
 
         //горизонтальные линии и обозначения
-        for (int i=2; i<9; i++) {
-            g.drawLine(50, 50+44*i, 400, 50+44*i);
-            int vs = 80 - i*10;
-            g.drawString(vs+"", 30, 50+44*i);
+        int horizontalLineY = 175;
+        int verticalLineY = 35;
+        int parametr = 0;
+        int endY = 0;
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
+        for (int i = 0; i < GraphrangeValues.size(); i++) {
+            g.drawLine(38, verticalLineY + horizontalLineY * i, 1550, verticalLineY + horizontalLineY * i);
+            parametr = GraphrangeValues.get(GraphrangeValues.size() - 1 - i);
+
+            for (Integer rangeValue : rangeValues) {
+                if (rangeValue == parametr) {
+                    coordinatesRangeY.put(parametr, verticalLineY + horizontalLineY * i);
+                }
+            }
+
+            g.drawString(parametr + "", 20, verticalLineY + horizontalLineY * i);
+            if (i == GraphrangeValues.size() - 2) {
+                endY = verticalLineY + horizontalLineY * i;
+            }
         }
 
-        g.drawString("upread.ru", 100, 40);
-        g.drawString("google.ru", 100, 60);
-        g.drawString("yandex.ru", 100, 80);
+        g.setFont(g.getFont().deriveFont(Font.ITALIC, 16f));
+//      Промежутки
+        int tmp = 35;
+        for (Double occurrence : occurrences) {
+            g.drawString(occurrence + "", tmp, 420);
+            tmp += 48;
+        }
 
-        g.drawString("Январь", 60, 420);
-        g.drawString("Февраль", 160, 420);
-        g.drawString("Март", 260, 420);
-        g.drawString("Апрель", 360, 420);
+//      Сам график
+        int realY = 0;
+        int value = 0;
+        tmp = 38;
+        int fillWidth = 48;
+        for (Integer rangeValue : rangeValues) {
+            g.setColor(BLUE);
+            value = rangeValue;
+            realY = coordinatesRangeY.get(rangeValue);
 
-        g.setColor(Color.BLUE);
-        g.fillRect(80, 30, 10, 10);
-        g.setColor(RED);
-        g.fillRect(80, 50, 10, 10);
-        g.setColor(Color.GREEN);
-        g.fillRect(80, 70, 10, 10);
-
-        for (int i=0; i<4; i++) {
-            //строим саму гистограмму
-            //извлекаем цвет для каждого графика
-            Color color = RED;
-            for (int j=0;j<3;j++) {
-                try {
-                    Field field = Class.forName("java.awt.Color").getField(GisFrame.col[j].toLowerCase());
-                    color = (Color)field.get(null);
-                } catch (Exception e) {}
-                g.setColor(color);
-                //переводим полученные данные в реальные координаты
-                int realY = (int) (400-44*GisFrame.y[j][i]/10)+3;
-                g.fillRect(50+20*j+100*i, realY, 20,(int) (GisFrame.y[j][i]*4.4));
+            if (value == 0) {
+                tmp += fillWidth;
+                continue;
             }
+            if (value > 1) {
+                g.fillRect(tmp, endY - horizontalLineY, 48, realY + 315);
+                //Рисуем границы 1-го промежута
+                g.setColor(BLACK);
+                g.drawRect(tmp, endY - horizontalLineY, 48, realY + 315);
+                tmp += fillWidth;
+                continue;
+            }
+
+            g.fillRect(tmp, endY / value, 48, realY - 35);
+
+//          Рисуем границы 1-го промежутка
+            g.setColor(BLACK);
+            g.drawRect(tmp, endY / value, 48, realY - 35);
+            tmp += fillWidth;
         }
     }
 }
