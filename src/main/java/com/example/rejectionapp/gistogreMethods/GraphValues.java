@@ -40,31 +40,6 @@ public class GraphValues {
 //        logger.info("numberIntervals: " + numberIntervals);
 
         createDataLineX(minValue, maxValue, step, arr);
-//        occurrences = new ArrayList<>();
-//        occurrences.add(minValue);
-//        double tmpSum = minValue;
-//        for (double i = minValue; i < maxValue; i += step) {
-//            occurrences.add(tmpSum + step);
-//            if (tmpSum + step * 2 <= maxValue) {
-//                tmpSum += step;
-//            } else {
-//                continue;
-//            }
-//        }
-
-        // Сгенерировать места вхождения
-//        rangeValues = new ArrayList<>();
-//        int numberOccurrences = 0;
-//
-//        for (int i = 1; i < occurrences.size(); i++) {
-//            for (double v : arr) {
-//                if (v >= occurrences.get(i - 1) && v <= occurrences.get(i)) {
-//                    numberOccurrences++;
-//                }
-//            }
-//            rangeValues.add(numberOccurrences);
-//            numberOccurrences = 0;
-//        }
     }
 
 //  График по Y
@@ -91,7 +66,7 @@ public class GraphValues {
     // Сортровка графика по Y
     private void sortedDataLineY() {
         lineY.add(0);
-        sortedLineY = lineY.stream().mapToInt(i -> i).sorted().boxed().toList();
+        sortedLineY = lineY.stream().mapToInt(i -> i).sorted().distinct().boxed().toList();
         lineY.removeLast();
 
         logger.info("lineY: " + Arrays.toString(lineY.toArray()));
@@ -103,7 +78,7 @@ public class GraphValues {
         // Добавляем все значения от min до max с шагом step
         lineX = new ArrayList<>();
         for (double i = minValue; i < maxValue; i += step) {
-            lineX.add(i);
+            lineX.add(Math.round(i * 10) / 10.0);
         }
         if (!lineX.contains(maxValue)) lineX.add(maxValue);
 

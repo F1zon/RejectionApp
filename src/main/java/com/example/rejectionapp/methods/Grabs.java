@@ -39,6 +39,7 @@ public class Grabs extends Methods {
 
         n = arr.length;
         standardDeviationValue = standardDeviation();
+        clearingArray();
         return standardDeviationValue / (Arrays.stream(arr).sum() / n);
     }
 }

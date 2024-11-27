@@ -19,6 +19,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -70,6 +72,7 @@ public class EndAppController {
     private final Logger logger = Logger.getLogger(EndAppController.class.getName());
     private Window window;
     private Scene scene;
+    private BufferedImage image;
 
     @FXML
     private void startWindow() {
@@ -107,7 +110,8 @@ public class EndAppController {
         coefficientVariation.setText(info[0]);
         averageValue.setText(info[1]);
         standardDeviation.setText(info[2]);
-        GistogramImage.setImage(SwingFXUtils.toFXImage(frame.getImage(), null));
+        this.image = frame.getImage();
+        GistogramImage.setImage(SwingFXUtils.toFXImage(image, null));
     }
 
     @FXML
@@ -140,6 +144,26 @@ public class EndAppController {
             File file = fileChooser.showSaveDialog(stage);
             fileChooser.setInitialDirectory(file.getParentFile());
             Files.copy(result.toPath(), file.toPath());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void downloadGis(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        File gis = new File("gis.jpg");
+        ImageIO.write(image, "JPG", gis);
+
+        Window stage = Background.getScene().getWindow();
+        fileChooser.setTitle("Save Gsitogram");
+        fileChooser.setInitialFileName("GisResult");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG file", "*.jpg"));
+
+        try {
+            File file = fileChooser.showSaveDialog(stage);
+            fileChooser.setInitialDirectory(file.getParentFile());
+            Files.copy(gis.toPath(), file.toPath());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -53,6 +53,6 @@ public abstract class Methods {
     }
 
     protected void clearingArray() {
-        this.arr = Arrays.stream(this.arr).filter(i -> i != 0.0).toArray();
+        this.arr = Arrays.stream(this.arr).filter(i -> i != 0).toArray();
     }
 }

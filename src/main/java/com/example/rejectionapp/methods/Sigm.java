@@ -31,6 +31,7 @@ public class Sigm extends Methods{
             if (i > inter2 || i < inter1) deleteValue(i);
         }
 
+        clearingArray();
         return standardDeviation() / ((Arrays.stream(arr).sum() / arr.length));
     }
 }
