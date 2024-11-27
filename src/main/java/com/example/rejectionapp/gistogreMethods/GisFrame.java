@@ -11,13 +11,13 @@ import java.io.File;
 public class GisFrame extends JFrame {
     private final BufferedImage image;
 
-    public GisFrame(File file) {
+    public GisFrame(double... arr) {
         super("GisFrame");
-        GisPanel panel = new GisPanel(file);
+        GisPanel panel = new GisPanel(arr);
 
         setBackground(Color.WHITE);
         setUndecorated(true);
-        getContentPane().add(new GisPanel(file));
+        getContentPane().add(new GisPanel(arr));
         pack();
 
         image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);

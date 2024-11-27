@@ -3,6 +3,7 @@ package com.example.rejectionapp.controllers;
 import com.example.rejectionapp.ExelWork;
 import com.example.rejectionapp.HelloApplication;
 import com.example.rejectionapp.gistogreMethods.GisFrame;
+import com.example.rejectionapp.gistogreMethods.GisPanel;
 import com.example.rejectionapp.methods.Selection;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -76,7 +77,7 @@ public class EndAppController {
         File fileMethod = new File("Method.txt");
         File fileArr = new File("arr.txt");
         List<String> list = new ArrayList<>();
-        GisFrame frame = new GisFrame(fileArr);
+//        GisFrame frame = new GisFrame(fileArr);
 
         try (Scanner sc = new Scanner(fileMethod);
             Scanner sc1 = new Scanner(fileArr)) {
@@ -100,6 +101,8 @@ public class EndAppController {
         }
 
         String[] info = selection.start(method, arr);
+        this.arr = selection.getArr();
+        GisFrame frame = new GisFrame(this.arr);
 
         coefficientVariation.setText(info[0]);
         averageValue.setText(info[1]);

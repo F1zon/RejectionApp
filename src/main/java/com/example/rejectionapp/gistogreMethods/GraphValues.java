@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,63 +14,99 @@ import java.util.logging.Logger;
 @Getter
 public class GraphValues {
     // Список диапазонов
-    private List<Integer> rangeValues;
+    private List<Integer> lineY;
+    // Отсортированный список дипозонов
+    private List<Integer> sortedLineY;
     // Список вхождений
-    private List<Double> occurrences;
+    private List<Double> lineX;
     private final Logger logger = Logger.getLogger(GraphValues.class.getName());
 
-    public GraphValues(File file) {
-        createData(file);
+    public GraphValues(double... arr) {
+        createData(arr);
     }
 
-    private void createData(File fileArr) {
-        // Получить массив данных
-        List<String> tmp = new ArrayList<>();
-
-        try (Scanner scanner = new Scanner(fileArr)) {
-            while (scanner.hasNextLine()) {
-                tmp.add(scanner.nextLine());
-            }
-        } catch (Exception e) {
-            throw  new RuntimeException(e);
-        }
-
-        double[] arr = new double[tmp.size()];
-        for (int i = 0; i < tmp.size(); i++) {
-            arr[i] = Double.parseDouble(tmp.get(i));
-        }
-
+    private void createData(double... arr) {
         // Сгенерировать интервалы
-        int gap = (int) Math.ceil(Math.sqrt(arr.length)); // Промежуток между интервалами
+        int numberIntervals = (int) Math.sqrt(arr.length) + 1; // Кол-во интервалов
 
         double minValue = Arrays.stream(arr).min().getAsDouble(); // Минимальное и максимальное число
         double maxValue = Arrays.stream(arr).max().getAsDouble();
-        logger.info("maxValue: " + maxValue);
 
-        occurrences = new ArrayList<>();
-        occurrences.add(minValue);
-        double tmpSum = minValue;
-        for (double i = minValue; i < maxValue; i += gap) {
-            occurrences.add(tmpSum + gap);
-            if (tmpSum + gap * 2 <= maxValue) {
-                tmpSum += gap;
-            } else {
-                continue;
-            }
-        }
+        double step = (maxValue - minValue) / numberIntervals; // Шаг разбиения
+        step = Math.round(step * 10) / 10.0;
+//        logger.info("minValue: " + minValue);
+//        logger.info("maxValue: " + maxValue);
+//        logger.info("step: " + step);
+//        logger.info("numberIntervals: " + numberIntervals);
+
+        createDataLineX(minValue, maxValue, step, arr);
+//        occurrences = new ArrayList<>();
+//        occurrences.add(minValue);
+//        double tmpSum = minValue;
+//        for (double i = minValue; i < maxValue; i += step) {
+//            occurrences.add(tmpSum + step);
+//            if (tmpSum + step * 2 <= maxValue) {
+//                tmpSum += step;
+//            } else {
+//                continue;
+//            }
+//        }
 
         // Сгенерировать места вхождения
-        rangeValues = new ArrayList<>();
-        int numberOccurrences = 0;
+//        rangeValues = new ArrayList<>();
+//        int numberOccurrences = 0;
+//
+//        for (int i = 1; i < occurrences.size(); i++) {
+//            for (double v : arr) {
+//                if (v >= occurrences.get(i - 1) && v <= occurrences.get(i)) {
+//                    numberOccurrences++;
+//                }
+//            }
+//            rangeValues.add(numberOccurrences);
+//            numberOccurrences = 0;
+//        }
+    }
 
-        for (int i = 1; i < occurrences.size(); i++) {
-            for (double v : arr) {
-                if (v >= occurrences.get(i - 1) && v <= occurrences.get(i)) {
-                    numberOccurrences++;
+//  График по Y
+    private void createDataLineY(double[] arr) {
+        int coll = 0;
+        lineY = new ArrayList<>();
+        int end = lineX.size() - 1;
+
+        // Интервалы
+        for (int  x1 = 1; x1 <= end - 1; x1++) {
+            for (double num : arr) {
+                if (num >= lineX.get(x1) && num <= lineX.get(x1 + 1)) {
+                    coll++;
                 }
             }
-            rangeValues.add(numberOccurrences);
-            numberOccurrences = 0;
+
+            lineY.add(coll);
+            coll = 0;
         }
+
+        sortedDataLineY();
+    }
+
+    // Сортровка графика по Y
+    private void sortedDataLineY() {
+        lineY.add(0);
+        sortedLineY = lineY.stream().mapToInt(i -> i).sorted().boxed().toList();
+        lineY.removeLast();
+
+        logger.info("lineY: " + Arrays.toString(lineY.toArray()));
+        logger.info("lineX: " + Arrays.toString(lineX.toArray()));
+    }
+
+//  График по X
+    private void createDataLineX(double minValue, double maxValue, double step, double[] arr) {
+        // Добавляем все значения от min до max с шагом step
+        lineX = new ArrayList<>();
+        for (double i = minValue; i < maxValue; i += step) {
+            lineX.add(i);
+        }
+        if (!lineX.contains(maxValue)) lineX.add(maxValue);
+
+        createDataLineY(arr);
     }
 }
