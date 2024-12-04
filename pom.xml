@@ -21,6 +21,12 @@
       <version>5.2.5</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math4-core -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math4-core</artifactId>
+      <version>4.0-beta1</version>
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
     <dependency>

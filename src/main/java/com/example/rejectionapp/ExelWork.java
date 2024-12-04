@@ -51,8 +51,11 @@ public class ExelWork {
         XSSFSheet sheet = workbook.createSheet();
 
         Map<String, String> data = new TreeMap<>();
+        String tmp = "";
         for (int i = 0; i < arr.length; i++) {
-            data.put(String.valueOf(i), String.valueOf(arr[i]));
+            tmp = String.valueOf(arr[i]);
+            tmp = tmp.replace(".", ",");
+            data.put(String.valueOf(i), tmp);
         }
 
         Set<String> keyset = data.keySet();

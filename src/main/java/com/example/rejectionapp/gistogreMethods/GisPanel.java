@@ -65,7 +65,6 @@ public class GisPanel extends JPanel {
         int realY = 0;
         int value = 0;
         tmp = 72;
-        lineY.addLast(1);
         for (int x = 0; x < lineY.size(); x++) {
             g.setColor(DARK_GRAY);
             // Значение вхождения

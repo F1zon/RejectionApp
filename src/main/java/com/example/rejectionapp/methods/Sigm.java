@@ -32,6 +32,9 @@ public class Sigm extends Methods{
         }
 
         clearingArray();
+        n = arr.length;
+        averageValue = Arrays.stream(arr).sum() / n;
+        standardDeviationValue = standardDeviation();
         return standardDeviation() / ((Arrays.stream(arr).sum() / arr.length));
     }
 }

@@ -17,9 +17,12 @@ public class Selection {
     public String[] start(String method, double... arr) {
         switch (method) {
             case "grabs":
-                Grabs methodGrabs = new Grabs();
-                methodGrabs.start(arr);
-                setData(methodGrabs);
+//                Grabs methodGrabs = new Grabs();
+//                methodGrabs.start(arr);
+//                setData(methodGrabs);
+                NewGrabbs grabs = new NewGrabbs(arr);
+                grabs.start();
+                setData(grabs);
                 break;
             case "sigm":
                 Sigm methodSigm = new Sigm();
@@ -50,9 +53,9 @@ public class Selection {
 
     private void setData(Methods methods) {
         this.arr = methods.getArr();
-        this.g1 = methods.getG1();
-        this.g2 = methods.getG2();
-        this.gkr = methods.getGkr();
+//        this.g1 = methods.getG1();
+//        this.g2 = methods.getG2();
+//        this.gkr = methods.getGkr();
         this.coefficientVariation = methods.getCoefficientVariation();
         this.averageValue = methods.getAverageValue();
         this.standardDeviationValue = methods.getStandardDeviationValue();

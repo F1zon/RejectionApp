@@ -49,7 +49,7 @@ public class GraphValues {
         int end = lineX.size() - 1;
 
         // Интервалы
-        for (int  x1 = 1; x1 <= end - 1; x1++) {
+        for (int  x1 = 0; x1 <= end - 1; x1++) {
             for (double num : arr) {
                 if (num >= lineX.get(x1) && num <= lineX.get(x1 + 1)) {
                     coll++;

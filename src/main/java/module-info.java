@@ -27,4 +27,6 @@ module com.example.rejectionapp {
     opens com.example.rejectionapp.controllers to javafx.fxml;
     exports com.example.rejectionapp.gistogreMethods;
     opens com.example.rejectionapp.gistogreMethods to javafx.fxml;
+    exports com.example.rejectionapp.methods;
+    opens com.example.rejectionapp.methods to javafx.fxml;
 }
