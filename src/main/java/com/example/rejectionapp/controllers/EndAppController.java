@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -68,6 +69,7 @@ public class EndAppController {
 
     double[] arr;
     private String method;
+    private String vid;
     private final Selection selection = new Selection();
     private final Logger logger = Logger.getLogger(EndAppController.class.getName());
     private Window window;
@@ -79,13 +81,19 @@ public class EndAppController {
         logger.info("Initialize EndAppController");
         File fileMethod = new File("Method.txt");
         File fileArr = new File("arr.txt");
+        File fileVid = new File("Distribution.txt");
         List<String> list = new ArrayList<>();
 //        GisFrame frame = new GisFrame(fileArr);
 
         try (Scanner sc = new Scanner(fileMethod);
-            Scanner sc1 = new Scanner(fileArr)) {
+            Scanner sc1 = new Scanner(fileArr);
+            Scanner sc2 = new Scanner(fileVid)) {
             while (sc.hasNextLine()) {
                 method = sc.nextLine();
+            }
+
+            while (sc2.hasNextLine()) {
+                vid = sc2.nextLine();
             }
 
             while (sc1.hasNextLine()) {
@@ -103,7 +111,7 @@ public class EndAppController {
             arr[i] = Double.parseDouble(list.get(i));
         }
 
-        String[] info = selection.start(method, arr);
+        String[] info = selection.start(method, arr, vid);
         this.arr = selection.getArr();
         GisFrame frame = new GisFrame(this.arr);
 

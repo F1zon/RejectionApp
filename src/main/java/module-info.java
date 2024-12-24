@@ -20,6 +20,7 @@ module com.example.rejectionapp {
     requires jfreechart;
     requires jcommon;
     requires javafx.swing;
+    requires annotations;
 
     opens com.example.rejectionapp to javafx.fxml;
     exports com.example.rejectionapp;

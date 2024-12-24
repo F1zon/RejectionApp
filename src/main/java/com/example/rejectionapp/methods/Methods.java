@@ -18,7 +18,7 @@ public abstract class Methods {
     protected double averageValue;
     protected double standardDeviationValue;
 
-    protected void start(double... arr) {
+    protected void start(double[] arr, String rasp) {
         this.arr = arr;
     }
 

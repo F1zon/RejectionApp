@@ -2,20 +2,27 @@ package com.example.rejectionapp.controllers;
 
 import com.example.rejectionapp.ExelWork;
 import com.example.rejectionapp.HelloApplication;
+import com.example.rejectionapp.gistogreMethods.GisFrame;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FilenameUtils;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -35,6 +42,9 @@ public class DesigController {
 
     @FXML
     private Text fileName;
+
+    @FXML
+    private ImageView testGraph;
 
     private File file;
 
@@ -79,6 +89,31 @@ public class DesigController {
     }
 
     @FXML
+    private void testData() {
+        getDataInFile();
+        File fileArr = new File("arr.txt");
+        List<String> list = new ArrayList<>();
+
+        try (Scanner sc = new Scanner(fileArr)) {
+            while (sc.hasNextLine()) {
+                list.add(sc.nextLine() + "\n");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        double[] arr = new double[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = Double.parseDouble(list.get(i));
+        }
+
+        GisFrame frame = new GisFrame(arr);
+        BufferedImage image = frame.getImage();
+        this.testGraph.setImage(SwingFXUtils.toFXImage(image, null));
+    }
+
+    @FXML
     private void activeButtonStart(ActionEvent event) {
         Logger logger = Logger.getLogger("DesigController");
 
@@ -86,28 +121,22 @@ public class DesigController {
             return;
         }
 
-        if (FilenameUtils.getExtension(fileName.getText()).equals("txt")) {
-            try (Scanner sc = new Scanner(file);
-                 FileWriter fw = new FileWriter("arr.txt")) {
-                while (sc.hasNextLine()) {
-                    fw.write(sc.nextLine() + "\n");
-                }
-            } catch (Exception e) {
-                logger.warning(e.getMessage());
-            }
-        }
+        getDataInFile();
 
-        if (FilenameUtils.getExtension(fileName.getText()).equals("xlsx")) {
-            ExelWork exelWork = new ExelWork(file);
-            exelWork.setArrForTXT();
-        }
-
-        try (FileWriter fw = new FileWriter("Method.txt", true)) {
+        try (FileWriter fw = new FileWriter("Method.txt", true);
+            FileWriter fwRasp = new FileWriter("Distribution.txt")) {
             if (MetodGrabbsa.isSelected()) {
                 fw.write("grabs\n");
             }
             if (Metod3Sigm.isSelected()) {
                 fw.write("sigm");
+            }
+
+            if (VidNormal.isSelected()) {
+                fwRasp.write("normal");
+            }
+            if (VidLogonormalnoe.isSelected()) {
+                fwRasp.write("lognormal");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -123,6 +152,25 @@ public class DesigController {
             ((Node)(event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
             logger.warning(e.getMessage());
+        }
+    }
+
+    private void getDataInFile() {
+        Logger logger = Logger.getLogger("DesigController");
+        if (FilenameUtils.getExtension(fileName.getText()).equals("txt")) {
+            try (Scanner sc = new Scanner(file);
+                 FileWriter fw = new FileWriter("arr.txt")) {
+                while (sc.hasNextLine()) {
+                    fw.write(sc.nextLine() + "\n");
+                }
+            } catch (Exception e) {
+                logger.warning(e.getMessage());
+            }
+        }
+
+        if (FilenameUtils.getExtension(fileName.getText()).equals("xlsx")) {
+            ExelWork exelWork = new ExelWork(file);
+            exelWork.setArrForTXT();
         }
     }
 

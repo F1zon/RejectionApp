@@ -2,23 +2,20 @@ package com.example.rejectionapp.methods;
 
 import lombok.Getter;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Getter
-public class NewGrabbs extends Methods {
+public class Grabbs extends Methods {
 
-    public NewGrabbs(double[] arr) {
+    public void start(double[] arr) {
         this.arr = Arrays.stream(arr).sorted().toArray();
-    }
-
-    public void start() {
-        double alpha = 0.05;
         double tmp = 0;
         do {
-            grubbsTest(this.arr, alpha);
+            grubbsTest(this.arr);
             if (tmp == coefficientVariation) break;
             tmp = coefficientVariation;
         } while (coefficientVariation > 0.33);
@@ -43,11 +40,11 @@ public class NewGrabbs extends Methods {
     }
 
     // Метод Граббса для выявления выбросов
-    private void grubbsTest(double[] data, double alpha) {
+    private void grubbsTest(double[] data) {
         calculateMean(data);
         calculateStandardDeviation(data, averageValue);
         int n = data.length;
-        List<Integer> outlierIndexs = new ArrayList<Integer>();
+        List<Integer> outlierIndexs = new ArrayList<>();
         double maxZ = 0.0;
         int outlierIndex = -1;
         double z = 0;
@@ -63,7 +60,7 @@ public class NewGrabbs extends Methods {
             }
         }
 
-        if (maxZ > calculateCriticalValue(n, alpha)) {
+        if (maxZ > calculateCriticalValue(n)) {
             this.arr = deleteValue(data, outlierIndexs);
             calculateMean(data);
             calculateStandardDeviation(data, averageValue);
@@ -74,16 +71,14 @@ public class NewGrabbs extends Methods {
     }
 
     // Вычисление критического значения для тестирования Граббса
-    private double calculateCriticalValue(int n, double alpha) {
-        // Критические значения могут быть получены из таблицы критических значений Граббса
-        // Для упрощения можно использовать заранее известные значения или формулу
-        // Можно использовать в качестве примера: Tn = (n - 1) / Math.sqrt(n) * Math.sqrt((1.96 * 1.96) / (n - 2 + 1.96 * 1.96));
+    private double calculateCriticalValue(int n) {
         ValueGkr valueGkr = new ValueGkr();
         valueGkr.setGkr();
 
-        return valueGkr.getValue(n); // Пример: используем фиксированное значение для двухсторонней проверки на уровне значимости 0.05
+        return valueGkr.getValue(n);
     }
 
+    @NotNull
     private double[] deleteValue(double[] arr, List<Integer> indexRemove) {
         List<Double> list = new ArrayList<>(Arrays.stream(arr).boxed().toList());
         List<Double> resultList = new ArrayList<>();
@@ -95,7 +90,6 @@ public class NewGrabbs extends Methods {
         }
 
         double[] result = new double[resultList.size()];
-//        for (double i : arr) if (i != value) list.add(i);
         for (int i = 0; i < resultList.size(); i++) result[i] = resultList.get(i);
 
         return result;
