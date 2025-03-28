@@ -67,7 +67,8 @@ public class GraphValues {
     private void sortedDataLineY() {
         lineY.add(0);
         sortedLineY = lineY.stream().mapToInt(i -> i).sorted().distinct().boxed().toList();
-        lineY.removeLast();
+        //lineY.removeLast();
+        lineY.remove(sortedLineY.size() - 1);
 
         logger.info("lineY: " + Arrays.toString(lineY.toArray()));
         logger.info("lineX: " + Arrays.toString(lineX.toArray()));

@@ -23,9 +23,9 @@ public class Sigm extends Methods{
     }
 
     private double selection(String rasp) {
-        double maxNumber = Arrays.stream(arr).max().getAsDouble();
+        //double maxNumber = Arrays.stream(arr).max().getAsDouble();
+        //deleteValue(maxNumber);
 
-        deleteValue(maxNumber);
         clearingArray();
         int n = arr.length;
 

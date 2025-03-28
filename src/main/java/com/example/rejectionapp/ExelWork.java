@@ -1,10 +1,7 @@
 package com.example.rejectionapp;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -49,6 +46,9 @@ public class ExelWork {
     public File CreateAndSetFileExel(double[] arr) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet();
+
+        SortedArr sortedArr = new SortedArr();
+        arr = sortedArr.sort(arr);
 
         Map<String, String> data = new TreeMap<>();
         String tmp = "";

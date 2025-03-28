@@ -13,7 +13,7 @@ public class GisPanel extends JPanel {
     private GraphValues values;
     private final Logger logger = Logger.getLogger(GisPanel.class.getName());
     int MaxLengthX = 800;
-    int MaxLengthY = 1600;
+    int MaxLengthY = 1000;
 
     public GisPanel(double... arr) {
         setSize(1000, 800);
@@ -32,7 +32,17 @@ public class GisPanel extends JPanel {
         Map<Integer, Integer> coordinatesRangeY = new HashMap<>();
 
         // Разметка по Y #######################################################################
-        int horizontalLineY = 175;
+
+        int horizontalLineY = 75; // 175 исходное
+        // Редактирование размера по Y
+        if (sortLineY.size() < 6) {
+            horizontalLineY = 175;
+        }
+        if (sortLineY.size() < 10) {
+            horizontalLineY = 95;
+        }
+
+
         int verticalLineY = 35;
         int parametr = 0;
         int endY = 0;

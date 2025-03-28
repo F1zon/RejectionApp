@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FilenameUtils;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
@@ -110,6 +111,7 @@ public class DesigController {
 
         GisFrame frame = new GisFrame(arr);
         BufferedImage image = frame.getImage();
+
         this.testGraph.setImage(SwingFXUtils.toFXImage(image, null));
     }
 

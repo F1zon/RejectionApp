@@ -53,7 +53,7 @@
     </CheckBox>
     <Pane fx:id="Info" layoutX="71.0" layoutY="119.0" prefHeight="40.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 10 10 10 0;;">
       <children>
-        <Text layoutX="26.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Формат документа - EXEL/TXT">
+        <Text layoutX="26.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Формат документа - Excel/TXT">
           <font>
             <Font size="16.0" />
           </font>
@@ -66,5 +66,19 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
+      <Pane fx:id="Info1" layoutX="71.0" layoutY="450.0" prefHeight="101.0" prefWidth="322.0" style="-fx-background-color: white; -fx-background-radius: 10 10 10 0;;">
+         <children>
+            <Text layoutX="26.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Памятка!">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="26.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Метод Граббса можно применять для выборки объёмом n &lt;= 30" wrappingWidth="285.7578125">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
   </children>
 </Pane>
