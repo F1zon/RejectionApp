@@ -40,32 +40,13 @@
                         <Font size="14.0" />
                     </font>
                 </Text>
-                <Text layoutX="41.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Асимметрия:">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Text>
-                <Text fx:id="asymmetry" layoutX="291.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Text>
-                <Text layoutX="41.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Эксэсс:">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Text>
-                <Text fx:id="excel" layoutX="291.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Text>
+
                 <Pane layoutX="20.0" layoutY="321.0" prefHeight="352.0" prefWidth="660.0" style="-fx-background-color: white;">
                <children>
                   <ImageView fx:id="GistogramImage" fitHeight="352.0" fitWidth="655.0" layoutX="6.0" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             </children></Pane>
-        <Button fx:id="downloadGis" layoutX="45.0" layoutY="364.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #FFC700; -fx-background-radius: 5; -fx-text-fill: black; -fx-font-size: 16; -fx-font-weight: bold;" text="Скачать гистограмму" onAction="#downloadGis">
+        <Button fx:id="downloadGis" layoutX="45.0" layoutY="364.0" mnemonicParsing="false" onAction="#downloadGis" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #FFC700; -fx-background-radius: 5; -fx-text-fill: black; -fx-font-size: 16; -fx-font-weight: bold;" text="Скачать гистограмму">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>

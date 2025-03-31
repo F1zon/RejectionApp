@@ -50,16 +50,10 @@ public class EndAppController {
     private Button OnloadDock;
 
     @FXML
-    private Text asymmetry;
-
-    @FXML
     private Text averageValue;
 
     @FXML
     private Text coefficientVariation;
-
-    @FXML
-    private Text excel;
 
     @FXML
     private Text standardDeviation;

@@ -26,6 +26,11 @@ public class Selection {
                 methodSigm.start(arr, rasp);
                 setData(methodSigm);
                 break;
+            case "standard":
+                Standard standard = new Standard();
+                standard.start(arr);
+                setData(standard);
+                break;
         }
 
         String[] result = new String[3];

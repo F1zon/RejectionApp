@@ -3,6 +3,7 @@ package com.example.rejectionapp.controllers;
 import com.example.rejectionapp.ExelWork;
 import com.example.rejectionapp.HelloApplication;
 import com.example.rejectionapp.gistogreMethods.GisFrame;
+import com.example.rejectionapp.methods.Selection;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +48,17 @@ public class DesigController {
     @FXML
     private ImageView testGraph;
 
+    // Значения для изначального графика
+    @FXML
+    private Text averageValue;
+
+    @FXML
+    private Text standardDeviation;
+
+    @FXML
+    private Text coefficientVariation;
+
+
     private File file;
 
     @FXML
@@ -86,6 +98,7 @@ public class DesigController {
         if (file != null) {
             System.out.println("File selected: " + file);
             fileName.setText(file.getName());
+            testData();
         }
     }
 
@@ -113,6 +126,15 @@ public class DesigController {
         BufferedImage image = frame.getImage();
 
         this.testGraph.setImage(SwingFXUtils.toFXImage(image, null));
+
+        // Добавление стандартного отклонения, среднего значения и коэффициента вариации
+        Selection selection = new Selection();
+        String[] info = selection.start("standard", arr, "");
+
+        coefficientVariation.setText(info[0]);
+        averageValue.setText(info[1]);
+        standardDeviation.setText(info[2]);
+
     }
 
     @FXML
