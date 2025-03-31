@@ -1,5 +1,5 @@
 package com.example.rejectionapp.methods;
-import java.util.HashMap;
+import java.util.*;
 
 public class ValueGkr {
     private HashMap<Integer, Double> gKr = new HashMap<>();
@@ -40,9 +40,39 @@ public class ValueGkr {
         gKr.put(36, 2.991 );
         gKr.put(38, 3.014 );
         gKr.put(40, 3.036 );
+
+        // Добавляем новые значения из таблицы
+        gKr.put(50, 3.13);
+        gKr.put(60, 3.20);
+        gKr.put(70, 3.26);
+        gKr.put(80, 3.31);
+        gKr.put(90, 3.35);
+        gKr.put(100, 3.36);
+        gKr.put(110, 3.42);
+        gKr.put(120, 3.44);
+        gKr.put(130, 3.47);
+        gKr.put(140, 3.49);
+
+//        gKr.put(1, 2.0);
+//        gKr.put(2, 3.0);
     }
 
     public double getValue(int key) {
+        if (gKr.get(key) == null) {
+            List<Integer> keys = new ArrayList<>(gKr.keySet());
+            keys.sort(Comparator.naturalOrder());
+
+            for (int i = 0; i < keys.size(); i++) {
+                if (key > keys.get(i) && key < keys.get(i + 1)) {
+                    return gKr.get(keys.get(i));
+                }
+            }
+
+            if (key > keys.size()) {
+                return 0;
+            }
+        }
+
         return gKr.get(key);
     }
 }
